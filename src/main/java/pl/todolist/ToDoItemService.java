@@ -51,4 +51,21 @@ public class ToDoItemService {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @PutMapping("/todoitems/{id}")
+    public ResponseEntity updateToDoItem(@PathVariable(value = "id") int id, @RequestBody ToDoItem update){
+        Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findById(id);
+
+        if (toDoItemFromDB.isPresent()) {
+            ToDoItem item = toDoItemFromDB.get();
+
+            item.setShortDescription(update.getShortDescription());
+            item.setDetails(update.getDetails());
+            item.setDeadline(update.getDeadline());
+
+            toDoItemRepository.save(item);
+            return ResponseEntity.ok(item);
+        }
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+    }
 }
