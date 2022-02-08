@@ -40,4 +40,15 @@ public class ToDoItemService {
         ToDoItem saved = toDoItemRepository.save(item);
         return ResponseEntity.ok(saved);
     }
+
+    @DeleteMapping("/todoitems")
+    public ResponseEntity deleteToDoItem(@RequestBody ToDoItem item) {
+        Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
+
+        if (toDoItemFromDB.isPresent()) {
+            toDoItemRepository.delete(toDoItemFromDB.get());
+            return ResponseEntity.ok(toDoItemFromDB);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    }
 }
