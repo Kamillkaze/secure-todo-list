@@ -19,11 +19,12 @@ public class ToDoItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NonNull
+    private String shortDescription;
+
     private String details;
 
     @NonNull
     private Date deadline;
 
-    @NonNull
-    private String shortDescription;
 }
