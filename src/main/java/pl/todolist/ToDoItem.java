@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "to_do_items") //'-items todoitem0_'   'to-do-items todoitem0_'
+@Table(name = "to_do_items")
 @Getter
 @Setter
 @AllArgsConstructor
