@@ -27,4 +27,9 @@ public class ToDoItem {
     @NonNull
     private Date deadline;
 
+    public ToDoItem(String shortDescription, String details, Date deadline) {
+        this.shortDescription = shortDescription;
+        this.details = details;
+        this.deadline = deadline;
+    }
 }
