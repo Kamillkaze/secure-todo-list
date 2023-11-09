@@ -1,10 +1,8 @@
 package pl.todolist;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -12,48 +10,42 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@RestController
+@Service
 public class ToDoItemService {
 
     @Autowired
     ToDoItemRepository toDoItemRepository;
 
-    @Autowired
-    ObjectMapper objectMapper;
 
-    @GetMapping("/todoitems")
-    public ResponseEntity getToDoItems() throws JsonProcessingException {
+    public List<ToDoItem> getAllToDoItems() {
         List<ToDoItem> toDoItems = toDoItemRepository.findAll()
                                     .stream()
                                     .sorted(Comparator.comparing(ToDoItem::getDeadline))
                                     .collect(Collectors.toList());
-        return ResponseEntity.ok(objectMapper.writeValueAsString(toDoItems));
+        return toDoItems;
     }
 
-    @PostMapping("/todoitems")
-    public ResponseEntity addToDoItem(@RequestBody ToDoItem item) {
+    public ToDoItem addToDoItem(ToDoItem item) {
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
 
         if (toDoItemFromDB.isPresent()) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            return null;
         }
         ToDoItem saved = toDoItemRepository.save(item);
-        return ResponseEntity.ok(saved);
+        return saved;
     }
 
-    @DeleteMapping("/todoitems")
-    public ResponseEntity deleteToDoItem(@RequestBody ToDoItem item) {
+    public ToDoItem deleteToDoItem(ToDoItem item) {
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
 
         if (toDoItemFromDB.isPresent()) {
             toDoItemRepository.delete(toDoItemFromDB.get());
-            return ResponseEntity.ok(toDoItemFromDB);
+            return toDoItemFromDB.get();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return null;
     }
 
-    @PutMapping("/todoitems/{id}")
-    public ResponseEntity updateToDoItem(@PathVariable(value = "id") int id, @RequestBody ToDoItem update){
+    public ToDoItem updateToDoItem(int id, ToDoItem update){
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findById(id);
 
         if (toDoItemFromDB.isPresent()) {
@@ -64,8 +56,8 @@ public class ToDoItemService {
             item.setDeadline(update.getDeadline());
 
             toDoItemRepository.save(item);
-            return ResponseEntity.ok(item);
+            return item;
         }
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        return null;
     }
 }
