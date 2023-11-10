@@ -19,35 +19,37 @@ public class ToDoItemService {
         this.toDoItemRepository = toDoItemRepository;
     }
 
-    public List<ToDoItem> getAllToDoItems() {
-        List<ToDoItem> toDoItems = toDoItemRepository.findAll()
+    public List<ToDoItemDto> getAllToDoItems() {
+        List<ToDoItemDto> toDoItems = toDoItemRepository.findAll()
                                     .stream()
                                     .sorted(Comparator.comparing(ToDoItem::getDeadline))
+                                    .map(ToDoItemDto::new)
                                     .collect(Collectors.toList());
         return toDoItems;
     }
 
-    public ToDoItem addToDoItem(ToDoItem item) {
+    public ToDoItemDto addToDoItem(ToDoItemDto item) {
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
 
         if (toDoItemFromDB.isPresent()) {
             return null;
         }
-        ToDoItem saved = toDoItemRepository.save(item);
-        return saved;
+        ToDoItem toBeSaved = new ToDoItem(item);
+        ToDoItem saved = toDoItemRepository.save(toBeSaved);
+        return new ToDoItemDto(saved);
     }
 
-    public ToDoItem deleteToDoItem(ToDoItem item) {
+    public ToDoItemDto deleteToDoItem(ToDoItemDto item) {
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
 
         if (toDoItemFromDB.isPresent()) {
             toDoItemRepository.delete(toDoItemFromDB.get());
-            return toDoItemFromDB.get();
+            return new ToDoItemDto(toDoItemFromDB.get());
         }
         return null;
     }
 
-    public ToDoItem updateToDoItem(int id, ToDoItem update){
+    public ToDoItemDto updateToDoItem(int id, ToDoItemDto update){
         Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findById(id);
 
         if (toDoItemFromDB.isPresent()) {
@@ -58,7 +60,7 @@ public class ToDoItemService {
             item.setDeadline(update.getDeadline());
 
             toDoItemRepository.save(item);
-            return item;
+            return new ToDoItemDto(item);
         }
         return null;
     }

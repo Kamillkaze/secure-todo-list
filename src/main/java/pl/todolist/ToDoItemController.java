@@ -22,15 +22,15 @@ public class ToDoItemController {
     }
 
     @GetMapping("/todoitems")
-    public ResponseEntity getToDoItems() throws JsonProcessingException {
-        List<ToDoItem> toDoItems = toDoItemService.getAllToDoItems();
+    public ResponseEntity<List<ToDoItemDto>> getToDoItems() throws JsonProcessingException {
+        List<ToDoItemDto> toDoItems = toDoItemService.getAllToDoItems();
 
-        return ResponseEntity.ok(objectMapper.writeValueAsString(toDoItems));
+        return ResponseEntity.ok(toDoItems);
     }
 
     @PostMapping("/todoitems")
-    public ResponseEntity addToDoItem(@RequestBody ToDoItem item) {
-        ToDoItem toDoItem = toDoItemService.addToDoItem(item);
+    public ResponseEntity<ToDoItemDto> addToDoItem(@RequestBody ToDoItemDto item) {
+        ToDoItemDto toDoItem = toDoItemService.addToDoItem(item);
 
         if (toDoItem == null) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
@@ -40,8 +40,8 @@ public class ToDoItemController {
     }
 
     @DeleteMapping("/todoitems")
-    public ResponseEntity deleteToDoItem(@RequestBody ToDoItem item) {
-        ToDoItem deleted = toDoItemService.deleteToDoItem(item);
+    public ResponseEntity<ToDoItemDto> deleteToDoItem(@RequestBody ToDoItemDto item) {
+        ToDoItemDto deleted = toDoItemService.deleteToDoItem(item);
 
         if (deleted != null) {
             return ResponseEntity.ok(deleted);
@@ -51,8 +51,8 @@ public class ToDoItemController {
     }
 
     @PutMapping("/todoitems/{id}")
-    public ResponseEntity updateToDoItem(@PathVariable(value = "id") int id, @RequestBody ToDoItem update){
-        ToDoItem updated = toDoItemService.updateToDoItem(id, update);
+    public ResponseEntity<ToDoItemDto> updateToDoItem(@PathVariable(value = "id") int id, @RequestBody ToDoItemDto update){
+        ToDoItemDto updated = toDoItemService.updateToDoItem(id, update);
 
         if (updated != null) {
             return ResponseEntity.ok(updated);

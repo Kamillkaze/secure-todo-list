@@ -32,4 +32,11 @@ public class ToDoItem {
         this.details = details;
         this.deadline = deadline;
     }
+
+    public ToDoItem(ToDoItemDto item) {
+        this.id = item.getId();
+        this.shortDescription = item.getShortDescription();
+        this.details = item.getDetails();
+        this.deadline = item.getDeadline();
+    }
 }
