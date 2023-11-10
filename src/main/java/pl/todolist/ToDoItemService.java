@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 @Service
 public class ToDoItemService {
 
-    @Autowired
-    ToDoItemRepository toDoItemRepository;
+    private final ToDoItemRepository toDoItemRepository;
 
+    public ToDoItemService(ToDoItemRepository toDoItemRepository) {
+        this.toDoItemRepository = toDoItemRepository;
+    }
 
     public List<ToDoItem> getAllToDoItems() {
         List<ToDoItem> toDoItems = toDoItemRepository.findAll()

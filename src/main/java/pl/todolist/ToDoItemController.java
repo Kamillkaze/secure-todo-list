@@ -12,11 +12,14 @@ import java.util.List;
 @RestController
 public class ToDoItemController {
 
-    @Autowired
-    ToDoItemService toDoItemService;
+    private final ToDoItemService toDoItemService;
 
-    @Autowired
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public ToDoItemController(ToDoItemService toDoItemService, ObjectMapper objectMapper) {
+        this.toDoItemService = toDoItemService;
+        this.objectMapper = objectMapper;
+    }
 
     @GetMapping("/todoitems")
     public ResponseEntity getToDoItems() throws JsonProcessingException {
