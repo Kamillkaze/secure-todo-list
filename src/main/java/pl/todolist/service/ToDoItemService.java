@@ -1,6 +1,7 @@
 package pl.todolist.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.todolist.model.ToDoItem;
 import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
@@ -38,14 +39,9 @@ public class ToDoItemService {
         return new ToDoItemDto(saved);
     }
 
-    public ToDoItemDto deleteToDoItem(ToDoItemDto item) {
-        Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
-
-        if (toDoItemFromDB.isPresent()) {
-            toDoItemRepository.delete(toDoItemFromDB.get());
-            return new ToDoItemDto(toDoItemFromDB.get());
-        }
-        return null;
+    @Transactional
+    public long deleteToDoItem(ToDoItemDto item) {
+        return toDoItemRepository.deleteByShortDescription(item.getShortDescription());
     }
 
     public ToDoItemDto updateToDoItem(int id, ToDoItemDto update){

@@ -37,10 +37,10 @@ public class ToDoItemController {
 
     @DeleteMapping("/todoitems")
     public ResponseEntity<ToDoItemDto> deleteToDoItem(@RequestBody ToDoItemDto item) {
-        ToDoItemDto deleted = toDoItemService.deleteToDoItem(item);
+        long numberOfDeletedItems = toDoItemService.deleteToDoItem(item);
 
-        if (deleted != null) {
-            return ResponseEntity.ok(deleted);
+        if (numberOfDeletedItems == 1) {
+            return ResponseEntity.ok(item);
         }
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
