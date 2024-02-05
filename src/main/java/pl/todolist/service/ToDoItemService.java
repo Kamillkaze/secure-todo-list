@@ -1,9 +1,9 @@
-package pl.todolist;
+package pl.todolist.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import pl.todolist.model.ToDoItem;
+import pl.todolist.dto.ToDoItemDto;
+import pl.todolist.repository.ToDoItemRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,12 +20,11 @@ public class ToDoItemService {
     }
 
     public List<ToDoItemDto> getAllToDoItems() {
-        List<ToDoItemDto> toDoItems = toDoItemRepository.findAll()
+        return toDoItemRepository.findAll()
                                     .stream()
                                     .sorted(Comparator.comparing(ToDoItem::getDeadline))
                                     .map(ToDoItemDto::new)
                                     .collect(Collectors.toList());
-        return toDoItems;
     }
 
     public ToDoItemDto addToDoItem(ToDoItemDto item) {

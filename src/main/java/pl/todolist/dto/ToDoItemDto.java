@@ -1,6 +1,7 @@
-package pl.todolist;
+package pl.todolist.dto;
 
 import lombok.*;
+import pl.todolist.model.ToDoItem;
 
 import java.sql.Date;
 

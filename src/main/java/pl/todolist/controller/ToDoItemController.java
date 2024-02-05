@@ -1,8 +1,10 @@
-package pl.todolist;
+package pl.todolist.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.todolist.dto.ToDoItemDto;
+import pl.todolist.service.ToDoItemService;
 
 import java.util.List;
 

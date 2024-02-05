@@ -1,6 +1,7 @@
-package pl.todolist;
+package pl.todolist.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.todolist.model.ToDoItem;
 
 import java.util.Optional;
 
