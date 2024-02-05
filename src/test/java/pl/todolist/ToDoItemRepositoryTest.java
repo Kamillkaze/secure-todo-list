@@ -1,9 +1,10 @@
 package pl.todolist;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import pl.todolist.model.ToDoItem;
+import pl.todolist.repository.ToDoItemRepository;
 
 import java.sql.Date;
 import java.util.Optional;

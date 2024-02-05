@@ -1,6 +1,7 @@
-package pl.todolist;
+package pl.todolist.model;
 
 import lombok.*;
+import pl.todolist.dto.ToDoItemDto;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -31,5 +32,12 @@ public class ToDoItem {
         this.shortDescription = shortDescription;
         this.details = details;
         this.deadline = deadline;
+    }
+
+    public ToDoItem(ToDoItemDto item) {
+        this.id = item.getId();
+        this.shortDescription = item.getShortDescription();
+        this.details = item.getDetails();
+        this.deadline = item.getDeadline();
     }
 }
