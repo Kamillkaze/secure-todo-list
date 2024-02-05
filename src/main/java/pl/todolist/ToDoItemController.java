@@ -1,8 +1,5 @@
 package pl.todolist;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +11,12 @@ public class ToDoItemController {
 
     private final ToDoItemService toDoItemService;
 
-    private final ObjectMapper objectMapper;
-
-    public ToDoItemController(ToDoItemService toDoItemService, ObjectMapper objectMapper) {
+    public ToDoItemController(ToDoItemService toDoItemService) {
         this.toDoItemService = toDoItemService;
-        this.objectMapper = objectMapper;
     }
 
     @GetMapping("/todoitems")
-    public ResponseEntity<List<ToDoItemDto>> getToDoItems() throws JsonProcessingException {
+    public ResponseEntity<List<ToDoItemDto>> getToDoItems() {
         List<ToDoItemDto> toDoItems = toDoItemService.getAllToDoItems();
 
         return ResponseEntity.ok(toDoItems);
