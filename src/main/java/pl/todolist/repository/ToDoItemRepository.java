@@ -9,7 +9,7 @@ import pl.todolist.model.ToDoItem;
 import java.util.Optional;
 
 public interface ToDoItemRepository extends JpaRepository<ToDoItem, Long> {
-    Optional<ToDoItem> findByShortDescription(String shortDescription);
+    boolean existsByShortDescription(String value);
     Optional<ToDoItem> findById(int id);
     @Modifying
     @Query("DELETE FROM ToDoItem t WHERE t.shortDescription = :shortDescription")

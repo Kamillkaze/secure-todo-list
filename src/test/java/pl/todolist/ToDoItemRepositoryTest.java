@@ -18,17 +18,15 @@ class ToDoItemRepositoryTest {
     private ToDoItemRepository underTest;
 
     @Test
-    void findByShortDescription() {
+    void existsByShortDescription() {
         
         Date testDate = new Date(1000000);
         ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
         underTest.save(item);
 
-        Optional<ToDoItem> foundByShortDescription = underTest
-                                                    .findByShortDescription(item.getShortDescription())
-                                                    .or(() -> Optional.of(new ToDoItem()));
+        boolean result = underTest.existsByShortDescription(item.getShortDescription());
 
-        assertThat(foundByShortDescription.get()).isEqualTo(item);
+        assertThat(result).isEqualTo(true);
     }
 
     @Test
