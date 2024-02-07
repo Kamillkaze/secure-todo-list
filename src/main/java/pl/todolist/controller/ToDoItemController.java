@@ -28,10 +28,6 @@ public class ToDoItemController {
     public ResponseEntity<ToDoItemDto> addToDoItem(@RequestBody ToDoItemDto item) {
         ToDoItemDto toDoItem = toDoItemService.addToDoItem(item);
 
-        if (toDoItem == null) {
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
-        }
-
         return ResponseEntity.ok(toDoItem);
     }
 
