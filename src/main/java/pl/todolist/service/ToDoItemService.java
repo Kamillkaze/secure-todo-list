@@ -2,6 +2,7 @@ package pl.todolist.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.todolist.exception.DuplicatedValueOfUniqueFieldException;
 import pl.todolist.model.ToDoItem;
 import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
@@ -29,11 +30,10 @@ public class ToDoItemService {
     }
 
     public ToDoItemDto addToDoItem(ToDoItemDto item) {
-        Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findByShortDescription(item.getShortDescription());
-
-        if (toDoItemFromDB.isPresent()) {
-            return null;
+        if (toDoItemRepository.existsByShortDescription(item.getShortDescription())) {
+            throw new DuplicatedValueOfUniqueFieldException(item.getShortDescription());
         }
+        
         ToDoItem toBeSaved = new ToDoItem(item);
         ToDoItem saved = toDoItemRepository.save(toBeSaved);
         return new ToDoItemDto(saved);
