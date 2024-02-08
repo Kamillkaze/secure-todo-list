@@ -2,7 +2,7 @@ package pl.todolist.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.todolist.exception.DuplicatedValueOfUniqueFieldException;
+import pl.todolist.exception.CustomIdException;
 import pl.todolist.model.ToDoItem;
 import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
@@ -30,8 +30,8 @@ public class ToDoItemService {
     }
 
     public ToDoItemDto addToDoItem(ToDoItemDto item) {
-        if (toDoItemRepository.existsByShortDescription(item.getShortDescription())) {
-            throw new DuplicatedValueOfUniqueFieldException(item.getShortDescription());
+        if (item.getId() != 0) {
+            throw new CustomIdException();
         }
 
         ToDoItem toBeSaved = new ToDoItem(item);
@@ -40,8 +40,12 @@ public class ToDoItemService {
     }
 
     @Transactional
-    public long deleteToDoItem(ToDoItemDto item) {
-        return toDoItemRepository.deleteByShortDescription(item.getShortDescription());
+    public void deleteToDoItemById(int id) {
+        int numberOfDeletedItems = toDoItemRepository.deleteById(id);
+
+        if (numberOfDeletedItems == 0) {
+            throw new EntityNotFoundException("Entity with id = " + id +" does not exist.");
+        }
     }
 
     public ToDoItemDto updateToDoItem(int id, ToDoItemDto update){

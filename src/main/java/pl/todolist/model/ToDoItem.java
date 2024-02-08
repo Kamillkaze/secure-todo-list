@@ -21,7 +21,6 @@ public class ToDoItem {
     private int id;
 
     @NonNull
-    @Column(unique = true)
     private String shortDescription;
 
     private String details;
