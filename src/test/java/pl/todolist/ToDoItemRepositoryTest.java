@@ -7,7 +7,6 @@ import pl.todolist.model.ToDoItem;
 import pl.todolist.repository.ToDoItemRepository;
 
 import java.sql.Date;
-import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
