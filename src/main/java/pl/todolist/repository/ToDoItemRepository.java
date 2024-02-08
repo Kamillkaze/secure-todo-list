@@ -10,6 +10,6 @@ public interface ToDoItemRepository extends JpaRepository<ToDoItem, Long> {
     boolean existsByShortDescription(String value);
     boolean existsById(int id);
     @Modifying
-    @Query("DELETE FROM ToDoItem t WHERE t.shortDescription = :shortDescription")
-    int deleteByShortDescription(@Param(value = "shortDescription") String shortDescription);
+    @Query("DELETE FROM ToDoItem t WHERE t.id = :id")
+    int deleteById(@Param(value = "id") int id);
 }

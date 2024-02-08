@@ -10,8 +10,8 @@ import javax.persistence.EntityNotFoundException;
 @ControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(DuplicatedValueOfUniqueFieldException.class)
-    public ResponseEntity<Object> handleDuplicatedEntityException(DuplicatedValueOfUniqueFieldException e) {
+    @ExceptionHandler(CustomIdException.class)
+    public ResponseEntity<Object> handleCustomIdException(CustomIdException e) {
         ApiException apiException = new ApiException(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
 
         return new ResponseEntity<>(apiException, apiException.getStatus());

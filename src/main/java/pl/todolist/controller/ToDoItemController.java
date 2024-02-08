@@ -33,13 +33,9 @@ public class ToDoItemController {
 
     @DeleteMapping("/todoitems")
     public ResponseEntity<ToDoItemDto> deleteToDoItem(@RequestBody ToDoItemDto item) {
-        long numberOfDeletedItems = toDoItemService.deleteToDoItem(item);
+        toDoItemService.deleteToDoItemById(item.getId());
 
-        if (numberOfDeletedItems == 1) {
-            return ResponseEntity.ok(item);
-        }
-
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        return ResponseEntity.ok(item);
     }
 
     @PutMapping("/todoitems/{id}")
