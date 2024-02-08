@@ -46,10 +46,6 @@ public class ToDoItemController {
     public ResponseEntity<ToDoItemDto> updateToDoItem(@PathVariable(value = "id") int id, @RequestBody ToDoItemDto update){
         ToDoItemDto updated = toDoItemService.updateToDoItem(id, update);
 
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        }
-
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        return ResponseEntity.ok(updated);
     }
 }

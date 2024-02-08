@@ -7,9 +7,9 @@ import pl.todolist.model.ToDoItem;
 import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,7 +33,7 @@ public class ToDoItemService {
         if (toDoItemRepository.existsByShortDescription(item.getShortDescription())) {
             throw new DuplicatedValueOfUniqueFieldException(item.getShortDescription());
         }
-        
+
         ToDoItem toBeSaved = new ToDoItem(item);
         ToDoItem saved = toDoItemRepository.save(toBeSaved);
         return new ToDoItemDto(saved);
@@ -45,18 +45,12 @@ public class ToDoItemService {
     }
 
     public ToDoItemDto updateToDoItem(int id, ToDoItemDto update){
-        Optional<ToDoItem> toDoItemFromDB = toDoItemRepository.findById(id);
-
-        if (toDoItemFromDB.isPresent()) {
-            ToDoItem item = toDoItemFromDB.get();
-
-            item.setShortDescription(update.getShortDescription());
-            item.setDetails(update.getDetails());
-            item.setDeadline(update.getDeadline());
-
-            toDoItemRepository.save(item);
-            return new ToDoItemDto(item);
+        if (!toDoItemRepository.existsById(id)) {
+            throw new EntityNotFoundException("Entity with id = " + id +" does not exist.");
         }
-        return null;
+
+        ToDoItem item = new ToDoItem(id, update.getShortDescription(), update.getDetails(), update.getDeadline());
+        ToDoItem saved = toDoItemRepository.save(item);
+        return new ToDoItemDto(saved);
     }
 }

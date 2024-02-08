@@ -30,15 +30,13 @@ class ToDoItemRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void existsById() {
         Date testDate = new Date(1000000);
         ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
         underTest.save(item);
 
-        Optional<ToDoItem> foundById = underTest
-                                        .findById(item.getId())
-                                        .or(() -> Optional.of(new ToDoItem()));
+        boolean existsById = underTest.existsById(item.getId());
 
-        assertThat(foundById.get()).isEqualTo(item);
+        assertThat(existsById).isEqualTo(true);
     }
 }
