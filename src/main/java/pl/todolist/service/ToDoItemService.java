@@ -8,7 +8,6 @@ import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,9 +21,8 @@ public class ToDoItemService {
     }
 
     public List<ToDoItemDto> getAllToDoItems() {
-        return toDoItemRepository.findAll()
+        return toDoItemRepository.findAllByOrderByDeadline()
                                     .stream()
-                                    .sorted(Comparator.comparing(ToDoItem::getDeadline))
                                     .map(ToDoItemDto::new)
                                     .collect(Collectors.toList());
     }
