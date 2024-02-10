@@ -9,7 +9,6 @@ import pl.todolist.model.ToDoItem;
 import java.util.List;
 
 public interface ToDoItemRepository extends JpaRepository<ToDoItem, Long> {
-    boolean existsByShortDescription(String value);
     boolean existsById(int id);
     @Modifying
     @Query("DELETE FROM ToDoItem t WHERE t.id = :id")
