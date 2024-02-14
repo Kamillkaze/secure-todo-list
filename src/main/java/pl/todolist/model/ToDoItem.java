@@ -14,6 +14,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class ToDoItem {
 
     @Id
