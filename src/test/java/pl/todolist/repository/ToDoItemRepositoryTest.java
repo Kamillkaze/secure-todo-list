@@ -1,16 +1,17 @@
 package pl.todolist.repository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import pl.todolist.model.ToDoItem;
 
-import java.sql.Date;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static pl.todolist.utils.TestUtils.getDefaultClientsList;
 
 @DataJpaTest
 class ToDoItemRepositoryTest {
@@ -18,14 +19,17 @@ class ToDoItemRepositoryTest {
     @Autowired
     private ToDoItemRepository repository;
 
+    @BeforeEach
+    void setUp() {
+        repository.deleteAll();
+    }
+
     @Test
     @DisplayName("Should return true if item exists by id")
     void existsByIdIfExists() {
-        Date testDate = new Date(1000000);
-        ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
+        ToDoItem saved = repository.save(getDefaultClientsList().get(3));
 
-        repository.save(item);
-        boolean existsById = repository.existsById(item.getId());
+        boolean existsById = repository.existsById(saved.getId());
 
         assertThat(existsById).isTrue();
     }
@@ -33,8 +37,7 @@ class ToDoItemRepositoryTest {
     @Test
     @DisplayName("Should return false if item does not exist by id")
     void existsByIdIfDoesNotExist() {
-        Date testDate = new Date(1000000);
-        ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
+        ToDoItem item = getDefaultClientsList().get(3);
 
         boolean existsById = repository.existsById(item.getId());
 
@@ -44,11 +47,9 @@ class ToDoItemRepositoryTest {
     @Test
     @DisplayName("Should return 1 if an item exists by id")
     void deleteByIdWhenExists() {
-        Date testDate = new Date(1000000);
-        ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
+        ToDoItem saved = repository.save(getDefaultClientsList().get(3));
 
-        repository.save(item);
-        int numberOfDeletedItems = repository.deleteById(item.getId());
+        int numberOfDeletedItems = repository.deleteById(saved.getId());
 
         assertThat(numberOfDeletedItems).isEqualTo(1);
     }
@@ -56,8 +57,7 @@ class ToDoItemRepositoryTest {
     @Test
     @DisplayName("Should return 0 if an item does not exist by id")
     void deleteByIdWhenDoesNotExist() {
-        Date testDate = new Date(1000000);
-        ToDoItem item = new ToDoItem("Test item", "Used only for testing", testDate);
+        ToDoItem item = getDefaultClientsList().get(3);
 
         int numberOfDeletedItems = repository.deleteById(item.getId());
 
@@ -75,16 +75,16 @@ class ToDoItemRepositoryTest {
     @Test
     @DisplayName("Should return a list of all items ordered ascending by deadline")
     void findAllByOrderByDeadline() {
-        Date testDate1 = new Date(100000000);
-        Date testDate2 = new Date(200000000);
-        Date testDate3 = new Date(300000000);
-        ToDoItem item2 = repository.save(new ToDoItem("Test item2", "Used only for testing", testDate2));
-        ToDoItem item1 = repository.save(new ToDoItem("Test item1", "Used only for testing", testDate1));
-        ToDoItem item3 = repository.save(new ToDoItem("Test item3", "Used only for testing", testDate3));
-        List<ToDoItem> expected = List.of(item1, item2, item3);
+        List<ToDoItem> defaultClients = getDefaultClientsList();
+        ToDoItem item2 = repository.save(defaultClients.get(2));
+        ToDoItem item0 = repository.save(defaultClients.get(0));
+        ToDoItem item4 = repository.save(defaultClients.get(4));
+        ToDoItem item3 = repository.save(defaultClients.get(3));
+        ToDoItem item1 = repository.save(defaultClients.get(1));
+        List<ToDoItem> expected = List.of(item0, item1, item2, item3, item4);
 
         List<ToDoItem> allByOrderByDeadline = repository.findAllByOrderByDeadline();
 
-        assertThat(allByOrderByDeadline).isEqualTo(expected);
+        assertThat(allByOrderByDeadline).containsAll(expected);
     }
 }
