@@ -1,8 +1,10 @@
 package pl.todolist.utils;
 
+import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.model.ToDoItem;
 
 import java.sql.Date;
+import java.util.Comparator;
 import java.util.List;
 
 public class TestUtils {
@@ -14,5 +16,13 @@ public class TestUtils {
 
     public static List<ToDoItem> getDefaultClientsList() {
         return List.of(ITEM_1, ITEM_2, ITEM_3, ITEM_4, ITEM_5);
+    }
+
+    public static List<ToDoItemDto> getDefaultClientsListMappedToDto() {
+        return getDefaultClientsList()
+                .stream()
+                .map(ToDoItemDto::new)
+                .sorted(Comparator.comparing(ToDoItemDto::getDeadline))
+                .toList();
     }
 }
