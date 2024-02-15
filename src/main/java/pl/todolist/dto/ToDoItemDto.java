@@ -9,6 +9,7 @@ import java.sql.Date;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class ToDoItemDto {
 
     @NonNull
