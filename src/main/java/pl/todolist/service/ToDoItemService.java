@@ -42,13 +42,13 @@ public class ToDoItemService {
         int numberOfDeletedItems = toDoItemRepository.deleteById(id);
 
         if (numberOfDeletedItems == 0) {
-            throw new EntityNotFoundException("Entity with id = " + id +" does not exist.");
+            throw new EntityNotFoundException("Entity with id = " + id + " does not exist.");
         }
     }
 
     public ToDoItemDto updateToDoItem(int id, ToDoItemDto update){
         if (!toDoItemRepository.existsById(id)) {
-            throw new EntityNotFoundException("Entity with id = " + id +" does not exist.");
+            throw new EntityNotFoundException("Entity with id = " + id + " does not exist.");
         }
 
         ToDoItem item = new ToDoItem(id, update.getShortDescription(), update.getDetails(), update.getDeadline());
