@@ -1,5 +1,6 @@
 package pl.todolist.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.todolist.exception.CustomIdException;
@@ -7,7 +8,6 @@ import pl.todolist.model.ToDoItem;
 import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.repository.ToDoItemRepository;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 

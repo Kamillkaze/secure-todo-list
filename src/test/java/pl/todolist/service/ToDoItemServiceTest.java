@@ -10,8 +10,8 @@ import pl.todolist.dto.ToDoItemDto;
 import pl.todolist.exception.CustomIdException;
 import pl.todolist.model.ToDoItem;
 import pl.todolist.repository.ToDoItemRepository;
+import jakarta.persistence.EntityNotFoundException;
 
-import javax.persistence.EntityNotFoundException;
 import java.sql.Date;
 import java.util.List;
 

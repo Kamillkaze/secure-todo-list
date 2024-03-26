@@ -1,9 +1,9 @@
 package pl.todolist.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 import pl.todolist.dto.ToDoItemDto;
 
-import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
