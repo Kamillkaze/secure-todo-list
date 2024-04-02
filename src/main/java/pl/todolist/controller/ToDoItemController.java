@@ -8,6 +8,7 @@ import pl.todolist.service.ToDoItemService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/v1")
 public class ToDoItemController {
 
     private final ToDoItemService toDoItemService;
