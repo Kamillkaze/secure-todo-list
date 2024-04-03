@@ -1,10 +1,10 @@
-# Boring-to-do-list
+# Secure-to-do-list
 
-Boring-to-do-list is a simple application - backend for program
-which can help with organising day and setting up schedules.
+Secure-to-do-list is a CRUD application with Jwt authentication provided by Spring Security.
 
 ## Technologies used
 
+- Spring Security
 - Spring Boot
 - Spring Data JPA
 - MySQL database
@@ -13,14 +13,17 @@ which can help with organising day and setting up schedules.
 ## Properties
 
 Features of the application:
-- Adding new to-do item to database.
-- Deleting to-do item from the database.
-- Updating to-do item records in the database.
-- Getting all records from the database.
+- Performing CRUD operations on to do items.
+- Registering users.
+- Obtaining Jwt Authentication tokens.
 
-### To-do item fields
+## Getting started
 
-- Short description (String) - stores name of the task.
-- Details (String) - stores detailed description of the task.
-- Deadline (java.sql.Date) - specifies the day on which the task
-  should be performed.
+To be able to use the app user has to register sending post request on /api/v1/auth/register
+providing firstName, lastName, email and password in body of a request.
+
+After successful registration, user will obtain a JWT Token which has to be sent with any other request
+as a method of authorization.
+
+Tokens are valid for 24 hours after creation - registered user can obtain a new token sending 
+request to /api/v1/auth/authenticate providing email and password in body.
