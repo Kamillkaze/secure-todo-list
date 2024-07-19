@@ -74,7 +74,7 @@ class ToDoItemServiceTest {
         ToDoItemDto result = service.addToDoItem(input);
 
         verify(toDoItemRepositoryMock, times(1)).save(repoInput);
-        assertThat(result).isEqualTo(new ToDoItemDto(null));
+        assertThat(result).isEqualTo(new ToDoItemDto(repoResult));
     }
 
     @Test
