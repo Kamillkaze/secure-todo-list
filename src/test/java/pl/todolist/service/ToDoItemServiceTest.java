@@ -19,7 +19,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.Mockito.*;
 import static pl.todolist.utils.TestUtils.getDefaultClientsList;
-import static pl.todolist.utils.TestUtils.getDefaultClientsListMappedToDto;
+import static pl.todolist.utils.TestUtils.getDefaultClientsListDto;
 
 @ExtendWith(MockitoExtension.class)
 class ToDoItemServiceTest {
@@ -45,7 +45,7 @@ class ToDoItemServiceTest {
     @DisplayName("Should return a list of ToDoItemDto mapped from list of ToDoItem returned by repository")
     void getAllToDoItemsWhenRepositoryReturnsValidList() {
         when(toDoItemRepositoryMock.findAllByOrderByDeadline()).thenReturn(getDefaultClientsList());
-        List<ToDoItemDto> expected = getDefaultClientsListMappedToDto();
+        List<ToDoItemDto> expected = getDefaultClientsListDto();
 
         List<ToDoItemDto> allToDoItems = service.getAllToDoItems();
 
@@ -66,7 +66,7 @@ class ToDoItemServiceTest {
     @Test
     @DisplayName("Should add a new item correctly")
     void addToDoItemWhenInputCorrect() {
-        ToDoItemDto input = getDefaultClientsListMappedToDto().get(0);
+        ToDoItemDto input = getDefaultClientsListDto().get(0);
         ToDoItem repoInput = new ToDoItem(input);
         ToDoItem repoResult = new ToDoItem(122, repoInput.getShortDescription(), repoInput.getDetails(), repoInput.getDeadline());
         when(toDoItemRepositoryMock.save(repoInput)).thenReturn(repoResult);
@@ -101,7 +101,7 @@ class ToDoItemServiceTest {
     @Test
     @DisplayName("Should throw EntityNotFoundException when trying to update not existing item")
     void updateToDoItemWhenItemDoesNotExist() {
-        ToDoItemDto item = getDefaultClientsListMappedToDto().get(0);
+        ToDoItemDto item = getDefaultClientsListDto().get(0);
         when(toDoItemRepositoryMock.existsById(item.getId())).thenReturn(false);
 
         assertThatThrownBy(() -> service.updateToDoItem(item.getId(), item))
@@ -113,7 +113,7 @@ class ToDoItemServiceTest {
     @DisplayName("Should update item properly")
     void updateToDoItemWhenEverythingOK() {
         ToDoItem input = getDefaultClientsList().get(0);
-        ToDoItemDto inputDto = getDefaultClientsListMappedToDto().get(0);
+        ToDoItemDto inputDto = getDefaultClientsListDto().get(0);
         ToDoItem fromRepo = new ToDoItem(123, "descr", "det", new Date(543123243));
         when(toDoItemRepositoryMock.save(input)).thenReturn(fromRepo);
         when(toDoItemRepositoryMock.existsById(inputDto.getId())).thenReturn(true);

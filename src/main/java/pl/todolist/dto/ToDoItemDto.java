@@ -12,7 +12,6 @@ import java.sql.Date;
 @EqualsAndHashCode
 public class ToDoItemDto {
 
-    @NonNull
     private int id;
 
     @NonNull
