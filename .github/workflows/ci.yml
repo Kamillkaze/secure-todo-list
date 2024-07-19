@@ -16,3 +16,6 @@ jobs:
       - name: run tests
         run: mvn test
 
+      - name: check test coverage
+        run: mvn clean verify
+
