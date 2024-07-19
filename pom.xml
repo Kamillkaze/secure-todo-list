@@ -112,7 +112,7 @@
                                 <exclude>**/*pl/todolist/controller/*</exclude>
                                 <exclude>**/*pl/todolist/dto/*</exclude>
                                 <exclude>**/*pl/todolist/model/*</exclude>
-<!--                                <exclude>**/*pl/todolist/exception/ApiException.class</exclude>-->
+                                <exclude>**/*pl/todolist/exception/ApiException.class</exclude>
                             </excludes>
                             <rules>
                                 <rule>
